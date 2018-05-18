@@ -1,0 +1,12 @@
+cd ~/Downloads
+sudo dd if=./ubantu-iso-name.iso of=/dev/sdX
+sudo eject /dev/sdX
+
+
+sudo fdisk -l 查看分区
+sudo umount /dev/sdb 卸载u盘分区
+sudo mkfs.vfat /dev/sdb -l 进行格式化
+	sudo mkfs.ntfs /dev/sdb
+	sudo mkfs.ext4 /dev/sdb
+	sudo mkfs.ext3 /dev/sdb
+

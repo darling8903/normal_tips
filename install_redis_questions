@@ -1,0 +1,39 @@
+1. 下载Redis源码（tar.gz），并上传到Linux
+
+2. 解压缩包：tar zxvf redis-2.8.17.tar.gz
+
+3. 进入解压缩后的文件夹：cd redis-2.8.17
+
+4. 编译源码：make
+
+（1）若出现如下提示，则说明未安装gcc，使用命令安装gcc：yum install gcc
+
+[root@localhost redis-2.8.17]# make
+cd src && make all
+make[1]: Entering directory `/root/redis-2.8.17/src‘
+    CC adlist.o
+/bin/sh: cc: command not found
+make[1]: *** [adlist.o] Error 127
+make[1]: Leaving directory `/root/redis-2.8.17/src‘
+make: *** [all] Error 2
+
+
+
+
+（2）若出现如下提示，则将make改为make MALLOC=libc，推测是因为编译库的问题。
+
+[root@localhost redis-2.8.17]# make
+cd src && make all
+make[1]: Entering directory `/root/redis-2.8.17/src‘
+    CC adlist.o
+In file included from adlist.c:34:
+zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory
+zmalloc.h:55:2: error: #error "Newer version of jemalloc required"
+make[1]: *** [adlist.o] Error 1
+make[1]: Leaving directory `/root/redis-2.8.17/src‘
+make: *** [all] Error 2
+5. 安装编译后的文件：make install，redis可执行文件将被复制到/usr/local/bin/，但没有配置，手动复制配置：cp redis.conf /usr/local/bin
+
+6. 设置Redis密码，编辑刚刚复制的配置文件：vi redis.conf，解除requirepass参数的注释，并设置值，例如：requirepass ljx520
+
+7. 使用配置文件启动Redis数据库：./redis-server redis.conf
